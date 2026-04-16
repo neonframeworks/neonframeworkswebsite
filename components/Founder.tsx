@@ -68,14 +68,14 @@ export default function Founder() {
 
             <div className="space-y-4 text-white/60 leading-relaxed">
               <p>
-                Founder, Director & Lead Editor — Rahul brings creative visions to life through polished, high-impact video content. Managing projects from initial direction through final post-production, he leads Neonframeworks with a passion for cinematic excellence.
+                <b>Founder, Director & Lead Editor.</b> Rahul brings creative visions to life through polished, high-impact video content. Managing projects from initial direction through final post-production, he leads Neonframeworks with a passion for cinematic excellence.
               </p>
               {/* <p>
                 A self-taught director and cinematographer, Rahul has worked with artists, brands, and couples
                 across India, crafting visuals that don&apos;t just document — they resonate, provoke, and inspire.
               </p> */}
               <p>
-                His expertise spans advanced colour grading, editorial direction, and on-ground shoot management — making every frame a statement. </p>
+                His expertise spans advanced colour grading, editorial direction, and on-ground shoot management, making every frame a statement. </p>
             </div>
 
             {/* <div className="mt-8 flex flex-wrap gap-4">
