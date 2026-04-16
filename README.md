@@ -57,7 +57,7 @@ This project uses secure server-side mutations for database writes. You need a S
 3. Open the JSON file and copy the required variables into your `.env.local`:
    - `FIREBASE_PROJECT_ID`
    - `FIREBASE_CLIENT_EMAIL` 
-   - `FIREBASE_PRIVATE_KEY` (ensure you preserve the `\n` linebreaks from the JSON as a single string, or wrap the string in quotes).
+   - `FIREBASE_PRIVATE_KEY` (ensure you preserve the `\\n` linebreaks from the JSON as a single string, or wrap the string in quotes).
 
 ---
 
