@@ -1,0 +1,24 @@
+// storage.rules
+// Deploy with: firebase deploy --only storage
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Public READ on all media files
+    match /images/{allPaths=**} {
+      allow read: if true;
+      allow write: if false; // Admin only via SDK with token
+    }
+
+    match /videos/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Deny all else
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

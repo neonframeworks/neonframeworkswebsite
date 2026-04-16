@@ -1,0 +1,46 @@
+// firestore.rules
+// Deploy with: firebase deploy --only firestore:rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Portfolio - public read, NO public write (admin writes via Admin panel)
+    // NOTE: Create a composite index on (featured ASC, createdAt DESC) in Firebase console
+    //       for the featured query to work efficiently.
+    match /portfolio/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /logos/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /highlights/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /testimonials/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /youtube_videos/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Contacts - locked down entirely; accessed securely via firebase-admin / Next.js API Routes.
+    match /contacts/{docId} {
+      allow read, write: if false;
+    }
+
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
