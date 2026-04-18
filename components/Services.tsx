@@ -95,7 +95,7 @@ export default function Services() {
                 className={`bento-card rounded-2xl p-6 relative overflow-hidden group ${service.span}`}
               >
                 <div className="absolute inset-0 opacity-40 z-0">
-                  <Image src={service.image} alt={service.title} fill className="object-cover" sizes="400px" />
+                  <Image src={service.image} alt="" fill className="object-cover" sizes="400px" />
                   <div className="absolute inset-0 bg-black/60 object-cover" />
                 </div>
                 {/* Card gradient bg */}

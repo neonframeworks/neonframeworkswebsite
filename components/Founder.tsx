@@ -31,13 +31,17 @@ export default function Founder() {
             transition={{ duration: 0.7 }}
             className="relative"
           >
-            <div className="relative aspect-[4/5] max-w-sm mx-auto">
+            <motion.div 
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="relative aspect-[4/5] max-w-sm mx-auto group"
+            >
               {/* Glow behind image */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#952EBE]/40 to-[#3A46DA]/40 rounded-2xl blur-2xl scale-110" />
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 w-full h-full bg-gradient-to-br from-[#952EBE]/20 to-[#3A46DA]/20 flex items-center justify-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#952EBE]/40 to-[#3A46DA]/40 rounded-2xl blur-[30px] scale-110 group-hover:scale-125 transition-transform duration-700" />
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 w-full h-full bg-gradient-to-br from-[#952EBE]/20 to-[#3A46DA]/20 flex items-center justify-center shadow-2xl">
                 {/* Replace with actual founder photo URL from Firebase */}
                 <div className="text-white/20 text-center w-full h-full">
-                  <Image src="/founder.webp" alt="Rahul Das (IICONIC)" fill className="object-cover" />
+                  <Image src="/founder.webp" alt="Rahul Das (IICONIC)" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
                 </div>
               </div>
               {/* Floating badge */}
@@ -50,7 +54,7 @@ export default function Founder() {
                 <div className="text-white font-bold text-sm">12 Awards</div>
                 <div className="text-white/50 text-xs">International</div>
               </motion.div> */}
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Content */}

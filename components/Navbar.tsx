@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Video } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useLenis } from 'lenis/react';
 
 const SCROLL_LINKS = [
   { label: 'Services', href: '#services' },
@@ -17,6 +18,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const lenis = useLenis();
   const isHome = pathname === '/';
 
   useEffect(() => {
@@ -27,11 +30,17 @@ export default function Navbar() {
 
   const handleScroll = (href: string) => {
     setOpen(false);
-    if (isHome) {
-      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.href = `/${href}`;
-    }
+    setTimeout(() => {
+      if (isHome) {
+        if (lenis) {
+          lenis.scrollTo(href, { offset: -60 });
+        } else {
+          document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        router.push(`/${href}`);
+      }
+    }, 150);
   };
 
   return (

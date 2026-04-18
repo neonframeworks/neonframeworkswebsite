@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import HowWeShoot from '@/components/HowWeShoot';
 import InfiniteMarquee from '@/components/InfiniteMarquee';
 import Stats from '@/components/Stats';
 import Portfolio from '@/components/Portfolio';
@@ -23,6 +24,7 @@ export default function HomePage() {
       <Portfolio />
       <YoutubeVideos />
       <Services />
+      <HowWeShoot />
       <Founder />
       <Team />
       <Testimonials />

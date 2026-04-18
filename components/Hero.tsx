@@ -72,7 +72,7 @@ export default function Hero() {
           className="mb-4"
         >
           <span className="text-xs font-semibold tracking-[0.3em] uppercase text-[#952EBE] bg-[#952EBE]/10 border border-[#952EBE]/20 px-4 py-1.5 rounded-full">
-            Videography Studio
+            Visual Media Production
           </span>
         </motion.div>
 

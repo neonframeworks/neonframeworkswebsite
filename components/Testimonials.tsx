@@ -15,8 +15,26 @@ interface Testimonial {
 }
 
 export default function Testimonials() {
+  const cardVariants = {
+    initial: (dir: number) => ({
+      opacity: 0,
+      scale: 0.8,
+      y: dir === 1 ? 100 : 0,
+      x: dir === 1 ? 0 : -200,
+    }),
+    exit: (dir: number) => ({
+      opacity: 0,
+      scale: 0.8,
+      y: dir === 1 ? 0 : 100,
+      x: dir === 1 ? -200 : 0,
+      rotateZ: dir === 1 ? -10 : 0,
+      transition: { duration: 0.3 }
+    })
+  };
+
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
 
   useEffect(() => {
     const fetch = async () => {
@@ -35,10 +53,12 @@ export default function Testimonials() {
   }, []);
 
   const handleNext = () => {
+    setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
   };
 
   const handlePrev = () => {
+    setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
@@ -95,44 +115,50 @@ export default function Testimonials() {
 
         {/* Right Flashcards Deck */}
         <div className="relative w-full h-[400px] md:h-[450px] flex items-center justify-center pt-8 md:pt-0">
-          {testimonials.length > 0 ? (
+          {testimonials.length > 0 ? (() => {
+            const visibleCards = [];
+            const numCards = Math.min(3, testimonials.length);
+            for (let i = 0; i < numCards; i++) {
+                const index = (currentIndex + i) % testimonials.length;
+                visibleCards.push({
+                    ...testimonials[index],
+                    diff: i,
+                });
+            }
+            return (
             <div className="relative w-full max-w-[340px] sm:max-w-[400px] h-full flex justify-center perspective-[1000px]">
-              <AnimatePresence>
-                {testimonials.map((t, i) => {
-                  const diff = (i - currentIndex + testimonials.length) % testimonials.length;
-                  
-                  // Only show the top 3 cards in the deck
-                  if (diff > 2 && diff !== testimonials.length - 1) return null;
-
-                  // Active card is at diff === 0
-                  const isActive = diff === 0;
+              <AnimatePresence custom={direction}>
+                {visibleCards.map((t) => {
+                  const isActive = t.diff === 0;
                   
                   // Mobile positioning overrides
-                  const xOffset = diff * 15;
-                  const yOffset = diff * 20;
-                  const scaleOffset = 1 - (diff * 0.05);
+                  const xOffset = t.diff * 15;
+                  const yOffset = t.diff * 20;
+                  const scaleOffset = 1 - (t.diff * 0.05);
 
                   return (
                     <motion.div
                       key={t.id}
+                      custom={direction}
                       drag={isActive ? "x" : false}
                       dragConstraints={{ left: 0, right: 0 }}
                       dragElastic={0.8}
                       onDragEnd={handleDragEnd}
-                      initial={{ opacity: 0, scale: 0.8, y: 100 }}
+                      variants={cardVariants}
+                      initial="initial"
                       animate={{ 
-                        opacity: isActive ? 1 : 1 - (diff * 0.3),
+                        opacity: 1 - (t.diff * 0.3),
                         scale: scaleOffset,
                         y: yOffset,
                         x: xOffset,
-                        zIndex: 30 - diff,
-                        rotateZ: diff * 2 // slight tilt for the cards in back
+                        zIndex: 30 - t.diff,
+                        rotateZ: t.diff * 2 // slight tilt for the cards in back
                       }}
-                      exit={{ opacity: 0, x: -200, rotateZ: -10, transition: { duration: 0.3 } }}
-                      transition={{ duration: 0.5, ease: "circOut" }}
+                      exit="exit"
+                      transition={{ duration: 0.4, ease: "circOut" }}
                       className={`absolute w-full h-[320px] sm:h-[350px] glass rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl flex flex-col justify-between ${isActive ? 'cursor-grab active:cursor-grabbing' : 'pointer-events-none'}`}
                       style={{ 
-                        backdropFilter: `blur(${16 + (diff * 4)}px)`,
+                        backdropFilter: `blur(${16 + (t.diff * 4)}px)`,
                         transformOrigin: 'top center'
                       }}
                     >
@@ -143,7 +169,7 @@ export default function Testimonials() {
                         <div className="flex justify-between items-start mb-4">
                           <div className="flex gap-1">
                             {[...Array(t.rating || 5)].map((_, j) => (
-                              <Star key={j} size={14} className="text-[#952EBE] fill-[#952EBE]" />
+                              <Star key={j} size={14} className="text-[#FFD700] fill-[#FFD700]" />
                             ))}
                           </div>
                           <Quote size={28} className="text-white/10" />
@@ -168,7 +194,7 @@ export default function Testimonials() {
                 })}
               </AnimatePresence>
             </div>
-          ) : (
+          ); })() : (
             <div className="w-full glass rounded-3xl p-10 flex flex-col items-center justify-center text-white/30 h-[300px]">
               <Quote size={36} className="mb-4 opacity-30" />
               <p>No testimonials available.</p>
